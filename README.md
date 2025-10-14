@@ -149,4 +149,4 @@ If you use BrainOmni model or code, please cite the following paper:
 
 > Qinfan Xiao, Ziyun Cui, Chi Zhang, Siqi Chen, Wen Wu, Andrew Thwaites, Alexandra Woolgar,
 Bowen Zhou, Chao Zhang (2025) BrainOmni: A Brain Foundation Model for Unified EEG and MEG Signals,
-_arXiv_, [https://arxiv.org/abs/2505.18185](https://arxiv.org/abs/2505.18185)
+_NeurIPS 2025_, [https://arxiv.org/abs/2505.18185](https://arxiv.org/abs/2505.18185)
