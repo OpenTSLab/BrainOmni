@@ -4,7 +4,7 @@
 
 [![Paper](https://img.shields.io/badge/paper-arxiv.2505.18185-red)](https://arxiv.org/abs/2505.18185)
 [![Paper](https://img.shields.io/badge/paper-NeurIPS2025-red)](https://neurips.cc/virtual/2025/poster/117066)
-[![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-FFD21E)](https://huggingface.co/sigureling/BrainOmni)
+[![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-FFD21E)](https://huggingface.co/OpenTSLab/BrainOmni)
 
 </div>
 
@@ -37,7 +37,7 @@ pip install -r requirements.txt
 ```
 
 ## 🍕 Released Checkpoint
-We have released the checkpoints of  `BrainOmni_tiny`, `BrainOmni_base` and `BrainTokenizer` on [Hugginface🤗](https://huggingface.co/sigureling/BrainOmni).
+We have released the checkpoints of  `BrainOmni_tiny`, `BrainOmni_base` and `BrainTokenizer` on [Hugginface🤗](https://huggingface.co/OpenTSLab/BrainOmni).
 
 See `demo.ipynb` for how to use BrainOmni.
 
