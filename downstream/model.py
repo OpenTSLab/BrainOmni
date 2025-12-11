@@ -30,7 +30,7 @@ class DownstreamModel(nn.Module):
         if self.frozen:
             self.backbone.eval()
         x = self.backbone.encode(**input_dict)
-        if x.ndim == 4:  # B C W D
+        if x.ndim == 4:  # B C W D for BrainOmni,LaBraM and CBraMod
             x = x.mean(2)
         x = x.contiguous().view(x.shape[0], -1)
         logits = self.class_head(x)
@@ -40,7 +40,7 @@ class DownstreamModel(nn.Module):
     @torch.no_grad()
     def predict(self, input_dict):
         x = self.backbone.encode(**input_dict)
-        if x.ndim == 4:
+        if x.ndim == 4: # B C W D for BrainOmni,LaBraM and CBraMod
             x = x.mean(2)
         x = x.contiguous().view(x.shape[0], -1)
         logits = self.class_head(x)
