@@ -15,6 +15,7 @@ from factory.brain_constant import (
 )
 from accessor import DataAccessor, write_torch_warpper
 
+
 def filter_channel(raw, dataset: str):
     exclude = []
     if dataset in EXCLUDE_DICT.keys():
@@ -165,15 +166,14 @@ def normalize_pos(pos: np.ndarray, eeg_mask, meg_mask):
     return pos
 
 
-def sensortype_wise_normalize(
-    _data: np.ndarray, eeg_mask, mag_mask, grad_mask
-):
+def sensortype_wise_normalize(_data: np.ndarray, eeg_mask, mag_mask, grad_mask):
+    # didn't do per channel z-score
     data = _data.copy()
     if eeg_mask.any():
         eeg_data = data[eeg_mask, :]
-        eeg_mean = np.mean(eeg_data, axis=0, keepdims=True)
+        eeg_mean = np.mean(eeg_data, axis=0, keepdims=True) # reset virtual reference
         eeg_data = eeg_data - eeg_mean
-        eeg_std = np.std(eeg_data) + 1.0e-5
+        eeg_std = np.std(eeg_data) + 1.0e-5 # scale as a group,perserve the magnitude relationship between eeg channels 
         data[eeg_mask, :] = eeg_data / (eeg_std)
 
     if mag_mask.any():
@@ -210,8 +210,8 @@ def split_to_segments_save(
     path: str,
     dataset: str,
     ready_path: str,
-    TIME:int,
-    STRIDE:int
+    TIME: int,
+    STRIDE: int,
 ):
     segments_metadata = []
     start = 0
@@ -225,8 +225,8 @@ def split_to_segments_save(
     accessor.mkdir(brain_file_folder_path)
 
     while end < data.shape[1]:
-        seg_data, _ = sensortype_wise_normalize(
-            data[:, start:end], eeg_mask, mag_mask, grad_mask, meg_mask
+        seg_data = sensortype_wise_normalize(
+            data[:, start:end], eeg_mask, mag_mask, grad_mask
         )
         if accept_segment(seg_data, pos):
             seg_data_path = os.path.join(
@@ -269,13 +269,14 @@ def split_pretrain_metadata(data):
     test = data[int(N * 0.95) :]
     return train, val, test, new_device_dataset_dict
 
+
 def process(
     accessor: DataAccessor,
     path: str,
     dataset: str,
     ready_path: str,
-    TIME:int,
-    STRIDE:int
+    TIME: int,
+    STRIDE: int,
 ):
     raw = accessor.read_brain_file(path)
     raw = rename_channel(raw, dataset)
@@ -311,6 +312,6 @@ def process(
         dataset,
         ready_path,
         TIME,
-        STRIDE
+        STRIDE,
     )
     return segments_metadata, path
