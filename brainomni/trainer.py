@@ -94,22 +94,18 @@ class Trainer:
                     for self.input_dict in tepoch:
                         tepoch.set_description(f"Epoch {self.epoch}")
                         tepoch.set_postfix(self.train_step())
-                        break
             else:
                 for self.input_dict in self.train_loader:
                     self.train_step()
-                    break
             self.model.eval()
             if self.rank == 0:
                 with tqdm(self.val_loader, unit="batch") as tepoch:
                     for self.input_dict in tepoch:
                         tepoch.set_description(f"Epoch {self.epoch}")
                         tepoch.set_postfix(self.eval_step())
-                        break
             else:
                 for self.input_dict in self.val_loader:
                     self.eval_step()
-                    break
             self.after_epoch()
         self.logger.info(">>>>>>>>>>>>>>>> Finish Training >>>>>>>>>>>>>>>>")
         self.load_ckpt(
@@ -134,7 +130,6 @@ class Trainer:
                     output_dict = self.model(**input_dict)
                     for key in self.test_running_dict.keys():
                         self.test_running_dict[key] += output_dict[key].item()
-                    break
 
             torch.cuda.empty_cache()
             for key in self.test_running_dict.keys():
