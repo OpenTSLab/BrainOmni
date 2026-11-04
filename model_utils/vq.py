@@ -3,7 +3,10 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import random
-import deepspeed.comm as dist
+try:
+    import deepspeed.comm as dist
+except ImportError:
+    import torch.distributed as dist
 from typing import List
 from math import ceil
 from einx import get_at
