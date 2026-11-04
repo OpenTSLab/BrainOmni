@@ -90,7 +90,8 @@ def extract_pos_sensor_type(info):
             except (ValueError, TypeError):
                 coil_type_int = None
 
-            if "PLANAR" in coil_type_str or coil_type_int == 3012:
+            planar_coil_types = {3012, 3013, 3014}  # FIFFV_COIL_VV_PLANAR_T1..T3
+            if "PLANAR" in coil_type_str or (coil_type_int is not None and coil_type_int in planar_coil_types):
                 dir_idx = 1
             dir = i["loc"][3 * dir_idx : 3 * (dir_idx + 1)]
             pos.append(np.hstack([xyz, dir]))
