@@ -8,7 +8,7 @@ from brainomni.model import BrainOmni
 def get_brainomni(
     pretrained: bool = True,
     ckpt_path: Optional[str] = None,
-    *awargs,
+    *args,
     **kwargs
 ):
     assert ckpt_path is not None

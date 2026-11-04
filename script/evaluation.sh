@@ -63,4 +63,4 @@ do
 done
 
 # this will compute the averaged result of 10 fold for each experiment
-python dowstream/metrics_stat.py
+python downstream/metrics_stat.py

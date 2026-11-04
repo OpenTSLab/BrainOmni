@@ -84,12 +84,19 @@ def extract_pos_sensor_type(info):
         else:
             xyz = i["loc"][:3]
             dir_idx = 3
-            if "PLANAR" in coil_type:
+            coil_type_str = str(i["coil_type"]).upper()
+            try:
+                coil_type_int = int(i["coil_type"])
+            except (ValueError, TypeError):
+                coil_type_int = None
+
+            if "PLANAR" in coil_type_str or coil_type_int == 3012:
                 dir_idx = 1
             dir = i["loc"][3 * dir_idx : 3 * (dir_idx + 1)]
             pos.append(np.hstack([xyz, dir]))
 
-            if "MAG" in coil_type:
+            mag_coil_types = {2000, 3022, 3023, 3024, 4001, 8001, 8002, 8003, 8004}
+            if "MAG" in coil_type_str or (coil_type_int is not None and coil_type_int in mag_coil_types):
                 sensor_type.append(SENSOR_TYPE_DICT["MAG"])
             else:
                 sensor_type.append(SENSOR_TYPE_DICT["GRAD"])
@@ -137,6 +144,14 @@ def auto_detect_bad_channels(raw: mne.io.Raw, eeg_mask, mag_mask, grad_mask):
     if eeg_mask.any():
         bad_channels += _auto_detect_bad_channels(
             raw.copy().pick(picks=mne.pick_types(raw.info, eeg=True))
+        )
+    if mag_mask.any():
+        bad_channels += _auto_detect_bad_channels(
+            raw.copy().pick(picks=mne.pick_types(raw.info, meg="mag"))
+        )
+    if grad_mask.any():
+        bad_channels += _auto_detect_bad_channels(
+            raw.copy().pick(picks=mne.pick_types(raw.info, meg="grad"))
         )
     return bad_channels
 
