@@ -8,9 +8,12 @@
 
 </div>
 
-
 Official Repository of the paper:
 BrainOmni: A Brain Foundation Model for Unified EEG and MEG Signals (NeurIPS 2025)
+
+## 📰 News
+
+- **[2026-11-25]** BrainOmni is now available in 书生·端砚 (Intern InkStone) as a [skill](https://discovery.intern-ai.org.cn/scp/skill/2047) and a hosted [MCP service]( https://discovery.intern-ai.org.cn/scp/detail/62) — no local GPU, PyTorch, or checkpoints required to get started.
 
 ## Method
 <p align="center">
